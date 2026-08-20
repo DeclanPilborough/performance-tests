@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://htvp4o4rvy85"]
+
+[ext_resource type="Texture2D" uid="uid://y50grnst33e6" path="res://performance-tests/art/simple-sprite.png" id="1_1vanu"]
+[ext_resource type="Script" uid="uid://bik67js3np6cd" path="res://performance-tests/scripts/base_test_ship.gd" id="1_bojlq"]
+
+[node name="Ship" type="Node2D" unique_id=1775591831]
+script = ExtResource("1_bojlq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1598106279]
+texture_filter = 1
+texture = ExtResource("1_1vanu")
