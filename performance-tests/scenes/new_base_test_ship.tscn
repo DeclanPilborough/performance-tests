@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://8ulxkg2o4dwa"]
+
+[ext_resource type="Script" uid="uid://rhr8f7h6b0rm" path="res://performance-tests/scripts/new_base_test_ship.gd" id="1_ae6m3"]
+[ext_resource type="Texture2D" uid="uid://y50grnst33e6" path="res://performance-tests/art/simple-sprite.png" id="1_qr44o"]
+
+[node name="NewBaseTestShip" type="Node2D" unique_id=416438733]
+script = ExtResource("1_ae6m3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1964183901]
+texture_filter = 1
+texture = ExtResource("1_qr44o")
+centered = false

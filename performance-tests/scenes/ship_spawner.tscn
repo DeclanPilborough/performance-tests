@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://htg5krwf7exk"]
+
+[ext_resource type="Script" uid="uid://7sakx50fcfan" path="res://performance-tests/scripts/ship_spawner.gd" id="1_evdxv"]
+
+[node name="TeamShipSpawn" type="Node2D" unique_id=1971023653]
+script = ExtResource("1_evdxv")
+
+[node name="Type1Input" type="SpinBox" parent="." unique_id=1692751950]
+offset_left = -87.0
+offset_right = -0.5
+offset_bottom = 31.0
+rounded = true
+allow_greater = true
+allow_lesser = true
+alignment = 1
+
+[node name="Type2Input" type="SpinBox" parent="." unique_id=1566736255]
+offset_right = 86.5
+offset_bottom = 31.0
+rounded = true
+allow_greater = true
+allow_lesser = true
+alignment = 1
+
+[node name="SpawnButton" type="Button" parent="." unique_id=460016622]
+offset_left = -31.0
+offset_top = -37.0
+offset_right = 31.0
+offset_bottom = -6.0
+text = "Spawn"
+
+[connection signal="pressed" from="SpawnButton" to="." method="spawn_ships"]
