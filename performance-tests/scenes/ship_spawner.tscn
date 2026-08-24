@@ -6,17 +6,10 @@
 script = ExtResource("1_evdxv")
 
 [node name="Type1Input" type="SpinBox" parent="." unique_id=1692751950]
-offset_left = -87.0
-offset_right = -0.5
-offset_bottom = 31.0
-rounded = true
-allow_greater = true
-allow_lesser = true
-alignment = 1
-
-[node name="Type2Input" type="SpinBox" parent="." unique_id=1566736255]
-offset_right = 86.5
-offset_bottom = 31.0
+offset_left = -43.0
+offset_top = 2.0
+offset_right = 43.5
+offset_bottom = 33.0
 rounded = true
 allow_greater = true
 allow_lesser = true
