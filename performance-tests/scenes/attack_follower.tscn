@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b4f88qc6d8nxa"]
+
+[ext_resource type="Script" uid="uid://db0mirih6vvee" path="res://performance-tests/scripts/attack_follower.gd" id="1_og11l"]
+
+[node name="AttackFollower" type="Node2D" unique_id=1487889466]
+script = ExtResource("1_og11l")

@@ -7,6 +7,9 @@ enum direction { left, right }
 @export var row_length: int
 @export var spacing: int
 
+@export var team_leader: Leader
+@export var team: int
+
 # need a list of the ships that are spawned, so that they can be counted
 var type1list: Array
 
@@ -32,4 +35,9 @@ func spawn_ships() -> void:
 		var xpos = spawn_pos.x + xscalar
 		var ypos = spawn_pos.y + ((type1list.size() % row_length) + 1) * spacing
 		ship.global_position = Vector2(xpos, ypos)
-		type1list.append(ship)
+		ship.team = team
+		type1list.append(ship as NewBaseTestShip)
+
+func battle_start() -> void:
+	team_leader.get_team(type1list)
+	team_leader.start_battle()

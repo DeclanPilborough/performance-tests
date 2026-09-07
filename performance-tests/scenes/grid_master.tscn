@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bep21yog0dhhy"]
+
+[ext_resource type="Script" uid="uid://dltupd3quaunk" path="res://performance-tests/scripts/grid.gd" id="1_f023b"]
+
+[node name="GridMaster" type="Node2D" unique_id=131962507]
+script = ExtResource("1_f023b")
+row_count = 50
+coloumn_count = 50
