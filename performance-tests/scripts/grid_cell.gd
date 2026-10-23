@@ -1,15 +1,25 @@
 class_name GridCell extends RefCounted
 
-var ships: Array[NewBaseTestShip]
+var ships: Dictionary
 var pos: Vector2
 var world_pos: Vector2
+enum cell_neighbour { 
+	TopLeft, 
+	Top, 
+	TopRight, 
+	Left, 
+	Right, 
+	BottomLeft, 
+	Bottom, 
+	BottomRight }
+var neighbours: Dictionary[cell_neighbour, GridCell]
 
-func get_ships() -> Array[NewBaseTestShip]:
+func get_ships() -> Dictionary:
 	return ships
 
 func add_ship(ship: NewBaseTestShip) -> void:
-	ships.append(ship)
+	ships[ship.to_string()] = ship
 	ship.current_grid_cell = self
 
 func remove_ship(ship: NewBaseTestShip) -> void:
-	ships.remove_at(ships.find(ship))
+	ships.erase(ship.to_string())

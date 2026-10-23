@@ -3,6 +3,7 @@ extends Follower
 func receive_orders(cells: Array) -> void:
 	var spot_to_attack = randi() % cells.size()
 	for follower in followers:
+		if (follower == null): continue
 		follower.receive_orders(cells)
 		follower.spot_to_attack = spot_to_attack
 		follower.attack = true

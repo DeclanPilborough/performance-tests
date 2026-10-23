@@ -5,10 +5,10 @@
 
 [node name="NewBaseTestShip" type="Node2D" unique_id=416438733]
 script = ExtResource("1_ae6m3")
-speed = 15
+speed = 30
 damage = 1
 health = 10000
-engagement_distance = 16
+engagement_distance = 32
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1964183901]
 texture_filter = 1

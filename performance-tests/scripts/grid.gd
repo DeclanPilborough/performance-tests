@@ -20,6 +20,8 @@ func _ready() -> void:
 			cells[cell_key].world_pos = Vector2(coloumn_current * cell_size, row_current * cell_size)
 			row_current += 1
 		coloumn_current += 1
+	for i in cells:
+		set_neighbour_cells(i)
 
 func get_cell_from_position(pos: Vector2) -> GridCell:
 	@warning_ignore("integer_division")
@@ -37,32 +39,10 @@ func ship_move(ship: NewBaseTestShip) -> void:
 		ship.current_grid_cell = cell
 
 func get_surrounding(ship: NewBaseTestShip) -> Array[NewBaseTestShip]:
-	var surrounds: Array[NewBaseTestShip] = ship.current_grid_cell.get_ships()
-	for cell in get_neighbouring_cells(ship.current_grid_cell):
-		surrounds.append_array(cell.get_ships())
+	var surrounds: Array = ship.current_grid_cell.get_ships().values()
+	for cell in ship.current_grid_cell.neighbours.values():
+		surrounds.append_array(cell.get_ships().values())
 	return surrounds
-
-func get_neighbouring_cells(cell: GridCell) -> Array[GridCell]:
-	var keys: String
-	var array: Array[GridCell]
-	
-	keys = String.num_int64(int(cell.pos.x)) + "/" + String.num_int64(int(cell.pos.y - 1))
-	if (cells.has(keys)):
-		array.append(cells[keys])
-	
-	keys = String.num_int64(int(cell.pos.x)) + "/" + String.num_int64(int(cell.pos.y + 1))
-	if (cells.has(keys)):
-		array.append(cells[keys])
-	
-	keys = String.num_int64(int(cell.pos.x - 1)) + "/" + String.num_int64(int(cell.pos.y))
-	if (cells.has(keys)):
-		array.append(cells[keys])
-	
-	keys = String.num_int64(int(cell.pos.x + 1)) + "/" + String.num_int64(int(cell.pos.y))
-	if (cells.has(keys)):
-		array.append(cells[keys])
-	
-	return array
 
 func get_random() -> GridCell:
 	@warning_ignore("integer_division")
@@ -71,3 +51,53 @@ func get_random() -> GridCell:
 	var row = rng.randi() % row_count
 	var key: String = String.num_int64(coloumn) + "/" + String.num_int64(row)
 	return cells[key]
+
+func set_neighbour_cells(cell_key: String) -> void:
+	var c_pos = cells[cell_key].pos
+	var string: String
+	var x: int
+	var y: int
+	
+	# top left
+	x = c_pos.x - 1
+	y = c_pos.y - 1
+	string = String.num_int64(x) + "/" + String.num_int64(y)
+	if (cells.has(string)):
+		cells[cell_key].neighbours[GridCell.cell_neighbour.TopLeft] = cells[string]
+	# top
+	x = c_pos.x
+	string = String.num_int64(x) + "/" + String.num_int64(y)
+	if (cells.has(string)):
+		cells[cell_key].neighbours[GridCell.cell_neighbour.Top] = cells[string]
+	# top right
+	x = c_pos.x + 1
+	string = String.num_int64(x) + "/" + String.num_int64(y)
+	if (cells.has(string)):
+		cells[cell_key].neighbours[GridCell.cell_neighbour.TopRight] = cells[string]
+	# left
+	x = c_pos.x - 1
+	y = c_pos.y
+	string = String.num_int64(x) + "/" + String.num_int64(y)
+	if (cells.has(string)):
+		cells[cell_key].neighbours[GridCell.cell_neighbour.Left] = cells[string]
+	# right
+	x = c_pos.x + 1
+	string = String.num_int64(x) + "/" + String.num_int64(y)
+	if (cells.has(string)):
+		cells[cell_key].neighbours[GridCell.cell_neighbour.Right] = cells[string]
+	# bottom left
+	x = c_pos.x - 1
+	y = c_pos.y + 1
+	string = String.num_int64(x) + "/" + String.num_int64(y)
+	if (cells.has(string)):
+		cells[cell_key].neighbours[GridCell.cell_neighbour.BottomLeft] = cells[string]
+	# bottom
+	x = c_pos.x
+	string = String.num_int64(x) + "/" + String.num_int64(y)
+	if (cells.has(string)):
+		cells[cell_key].neighbours[GridCell.cell_neighbour.Bottom] = cells[string]
+	# bottom right
+	x = c_pos.x + 1
+	string = String.num_int64(x) + "/" + String.num_int64(y)
+	if (cells.has(string)):
+		cells[cell_key].neighbours[GridCell.cell_neighbour.BottomRight] = cells[string]
