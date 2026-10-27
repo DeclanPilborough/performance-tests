@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ECS;
 public partial class World : RefCounted
@@ -11,9 +12,17 @@ public partial class World : RefCounted
 	Dictionary<int, Dictionary<ComponentType, Component>> EntityComponentRegister;
 	Dictionary<ComponentType, List<int>> ComponentEntityRegister;
 
-	public List<int> GetEntitiesByCmponents(ComponentType components)
+	public List<int> GetEntitiesByComponents(ComponentType componentFilter)
 	{
-		return ComponentEntityRegister[components];
+		HashSet<int> entities = [];
+		foreach (ComponentType keyType in ComponentEntityRegister.Keys)
+		{
+			if (componentFilter == (componentFilter &= keyType))
+			{
+				entities = (HashSet<int>)entities.Concat(ComponentEntityRegister[keyType]);
+			}
+		}
+		return [.. entities];
 	}
 
 	public Dictionary<ComponentType, Component> GetComponentsOfEntity(int entityID)
