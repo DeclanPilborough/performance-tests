@@ -14,6 +14,8 @@ public partial class World : RefCounted
 	MovementSystem movementSystem;
 	TargetingSystem targetingSystem;
 
+	WorldGrid worldGrid;
+
 	// registers
 	Dictionary<int, Dictionary<ComponentType, Component>> EntityComponentRegister;
 	Dictionary<ComponentType, List<int>> ComponentEntityRegister;
@@ -97,6 +99,8 @@ public partial class World : RefCounted
 		EntityComponentRegister = [];
 		ComponentEntityRegister = [];
 
+		worldGrid = new();
+
 		goalSystem = new()
 		{
 			world = this
@@ -128,6 +132,8 @@ public partial class World : RefCounted
 	/// </summary>
 	public void PopulateWorld()
 	{
+		worldGrid.BuildGrid();
+		
 		// create all entities
 	}
 	
