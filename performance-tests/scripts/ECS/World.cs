@@ -8,6 +8,12 @@ public partial class World : RefCounted
 {
 	int nextID = 0;
 
+	DamageSystem damageSystem;
+	GoalSystem goalSystem;
+	GridSystem gridSystem;
+	MovementSystem movementSystem;
+	TargetingSystem targetingSystem;
+
 	// registers
 	Dictionary<int, Dictionary<ComponentType, Component>> EntityComponentRegister;
 	Dictionary<ComponentType, List<int>> ComponentEntityRegister;
@@ -84,13 +90,44 @@ public partial class World : RefCounted
 	// world
 
 	/// <summary>
-	/// Populates the world with the provided entities.
+	/// Starts the world and begins all systems.
 	/// </summary>
-	public void PopulateWorld()
+	public void Start()
 	{
 		EntityComponentRegister = [];
 		ComponentEntityRegister = [];
 
+		goalSystem = new()
+		{
+			world = this
+		};
+
+		movementSystem = new()
+		{
+			world = this
+		};
+
+		gridSystem = new()
+		{
+			world = this
+		};
+
+		targetingSystem = new()
+		{
+			world = this
+		};
+
+		damageSystem = new()
+		{
+			world = this
+		};
+	}
+
+	/// <summary>
+	/// Populates the world with the provided entities.
+	/// </summary>
+	public void PopulateWorld()
+	{
 		// create all entities
 	}
 	
@@ -99,7 +136,11 @@ public partial class World : RefCounted
 	/// </summary>
 	public void RunWorldFrame() 
 	{
-		
+		goalSystem.Run();
+		movementSystem.Run();
+		gridSystem.Run();
+		targetingSystem.Run();
+		damageSystem.Run();
 	}
 }
 
