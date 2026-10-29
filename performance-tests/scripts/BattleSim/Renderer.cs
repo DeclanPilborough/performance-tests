@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public partial class Renderer : Node2D
 {
+    [Export]
     public Texture2D aliveShipSprite;
 
     public MultiMesh aliveShipsMultiMesh;

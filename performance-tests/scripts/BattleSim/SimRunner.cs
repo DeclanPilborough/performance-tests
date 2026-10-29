@@ -2,9 +2,11 @@ using Godot;
 using System;
 using ECS;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public partial class SimRunner : Node2D
 {
+	[Export]
 	public Renderer renderer;
 
 	World world;
@@ -24,8 +26,15 @@ public partial class SimRunner : Node2D
 	public void StartSim(/*variables*/)
 	{
 		running = true;
+
+		// fake it till you make it
+		Dictionary<int, IArchetype> worldPopulation = new()
+		{
+			{100, new BasicShipArchetype()}
+		};
+
 		// populate the world with variables
-		world.PopulateWorld(/*variables*/);
+		world.PopulateWorld(worldPopulation);
 
 		renderingData = world.GetRenderingData();
 
