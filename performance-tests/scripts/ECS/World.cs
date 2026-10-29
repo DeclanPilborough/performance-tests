@@ -133,11 +133,17 @@ public partial class World : RefCounted
 	/// <summary>
 	/// Populates the world with the provided entities.
 	/// </summary>
-	public void PopulateWorld()
+	public void PopulateWorld(/*archetypes/data for population*/ Dictionary<int, IArchetype> population)
 	{
 		worldGrid.BuildGrid();
 		
-		// create all entities
+		foreach (KeyValuePair<int, IArchetype> kvp in population)
+		{
+			for (int i = 0; i < kvp.Key; i++)
+			{
+				AddEntity(kvp.Value.ArchetypeComponents);
+			}
+		}
 	}
 	
 	/// <summary>
