@@ -99,7 +99,7 @@ public partial class World : RefCounted
 		EntityComponentRegister = [];
 		ComponentEntityRegister = [];
 
-		worldGrid = new();
+		worldGrid = new(/* dummy values*/ 50, 100, 100);
 
 		goalSystem = new()
 		{

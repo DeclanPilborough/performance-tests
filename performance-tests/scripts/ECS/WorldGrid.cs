@@ -5,14 +5,14 @@ using System.Linq;
 
 
 namespace ECS;
-public partial class WorldGrid : RefCounted
+public partial class WorldGrid(int cellSize, int gridHeight, int gridWidth) : RefCounted
 {
     // cell size in world units
-    public int cellSize;
+    //public int cellSize;
 
     // height and width of grid (size of grid)
-    public int gridHeight;
-    public int gridWidth;
+    //public int gridHeight;
+    //public int gridWidth;
 
     Dictionary<(int, int), HashSet<int>> gridCells;
 
@@ -77,12 +77,36 @@ public partial class WorldGrid : RefCounted
         gridCells[GetGridCellFromPosition(position)].Add(entityID);
     }
 
-    public List<int> GetEntitiesInGridCell((int, int) gridCell)
+    // public List<int> GetEntitiesInGridCell((int, int) gridCell)
+    // {
+    //     return [.. gridCells[gridCell]];
+    // }
+
+    public HashSet<int> GetEntitiesInGridCell((int, int) gridCell)
     {
-        return [.. gridCells[gridCell]];
+        return gridCells[gridCell];
     }
 
     // somehow make a way of creating easy-to-use areas/zones/shapes of grid cells surrounding 1
     // for targeting
     // could just start with surrounds
+
+    public List<int> GetEntitiesInNeighbours((int, int) gridCell)
+    {
+        HashSet<int> entities = [];
+
+        for (int x = gridCell.Item1 - 1; x < gridCell.Item1 + 1; x++)
+        {
+            for (int y = gridCell.Item2 - 1; y < gridCell.Item2 + 1; y++)
+            {
+                if (x < 0 || x > gridWidth || y < 0 || y > gridHeight)
+                {
+                    continue;
+                }
+
+                entities = (HashSet<int>)entities.Concat(gridCells[(x, y)]);
+            }
+        }
+        return [.. entities];
+    }
 }
