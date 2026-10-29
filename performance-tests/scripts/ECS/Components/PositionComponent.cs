@@ -4,5 +4,5 @@ using System;
 namespace ECS;
 public partial class PositionComponent : Component
 {
-    public Vector3 Position = Vector3.Zero;
+    public Vector2 Position = Vector2.Zero;
 }

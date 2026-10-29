@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ECS;
 public partial class World : RefCounted
@@ -15,6 +16,8 @@ public partial class World : RefCounted
 	TargetingSystem targetingSystem;
 
 	WorldGrid worldGrid;
+
+	ComponentType renderingFilter = ComponentType.Position | ComponentType.Rotation | ComponentType.Health;
 
 	// registers
 	Dictionary<int, Dictionary<ComponentType, Component>> EntityComponentRegister;
@@ -147,6 +150,45 @@ public partial class World : RefCounted
 		gridSystem.Run();
 		targetingSystem.Run();
 		damageSystem.Run();
+	}
+
+	// rendering data
+
+	public RenderingData GetRenderingData()
+	{
+		List<int> entities = GetEntitiesByComponents(renderingFilter);
+
+		Dictionary<int, Vector2> aliveTransforms = [];
+		Dictionary<int, float> aliveRotations = [];
+		Dictionary<int, Vector2> deadTransforms = [];
+
+		Dictionary<ComponentType, Component> entityComponents = [];
+
+        foreach (int entityID in entities)
+		{
+			entityComponents = GetComponentsOfEntity(entityID);
+
+			// if dead, add to dead list
+			if ((entityComponents[ComponentType.Health] as HealthComponent).Health <= 0)
+			{
+				deadTransforms[entityID] = (entityComponents[ComponentType.Position] as PositionComponent).Position;
+			}
+			// if alive, add pos and rot to alive lists
+			else
+			{
+				aliveTransforms[entityID] = (entityComponents[ComponentType.Position] as PositionComponent).Position;
+				aliveRotations[entityID] = (entityComponents[ComponentType.Rotation] as RotationComponent).Rotation;
+			}
+		}
+
+		// once all data has been collected, create and return struct
+
+		return new()
+		{
+			liveShipPositions = aliveTransforms,
+			liveShipRotations = aliveRotations,
+			deadShipPositions = deadTransforms
+		};
 	}
 }
 
