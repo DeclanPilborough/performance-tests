@@ -61,8 +61,8 @@ public partial class GoalSystem : System
         Vector2 t0AvgPos = new(t0TotalX/t0Count, t0TotalY/t0Count);
         Vector2 t1AvgPos = new(t1TotalX/t1Count, t1TotalY/t1Count);
 
-        (int, int) t0AvgGridPos = world.GetGridCellFromPosition(t0AvgPos);
-        (int, int) t1AvgGridPos = world.GetGridCellFromPosition(t1AvgPos);
+        (int, int) t0AvgGridPos = world.worldGrid.GetGridCellFromPosition(t0AvgPos);
+        (int, int) t1AvgGridPos = world.worldGrid.GetGridCellFromPosition(t1AvgPos);
 
         // tell each ship from each team where to go
 

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace ECS;
 public partial class World : RefCounted
 {
+	public WorldGrid worldGrid;
+
 	int nextID = 0;
 
 	DamageSystem damageSystem;
@@ -14,8 +16,6 @@ public partial class World : RefCounted
 	GridSystem gridSystem;
 	MovementSystem movementSystem;
 	TargetingSystem targetingSystem;
-
-	WorldGrid worldGrid;
 
 	ComponentType renderingFilter = ComponentType.Position | ComponentType.Rotation | ComponentType.Health;
 
@@ -205,16 +205,6 @@ public partial class World : RefCounted
 			liveShipRotations = aliveRotations,
 			deadShipPositions = deadTransforms
 		};
-	}
-
-	public Vector2 GetRandomPositionInGridCell((int, int) gridPosition)
-	{
-		return worldGrid.GetRandomPositionInGridCell(gridPosition);
-	}
-
-	public (int, int) GetGridCellFromPosition(Vector2 position)
-	{
-		return worldGrid.GetGridCellFromPosition(position);
 	}
 }
 

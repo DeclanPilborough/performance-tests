@@ -32,6 +32,15 @@ public partial class WorldGrid(int cellSize, int gridHeight, int gridWidth) : Re
         }
     }
 
+    // remove all entities from the grid (to facilitate rebuild)
+    public void ClearEntitiesFromGrid()
+    {
+        foreach ((int, int) cell in gridCells.Keys)
+        {
+            gridCells[cell] = [];
+        }
+    }
+
     public (int, int) GetGridCellFromPosition(Vector2 position)
     {
         return 
@@ -72,9 +81,11 @@ public partial class WorldGrid(int cellSize, int gridHeight, int gridWidth) : Re
     }
 
     // only works with entities smaller than a cell
-    public void AddEntityToGridCell(int entityID, Vector2 position)
+    public (int, int) AddEntityToGridCell(int entityID, Vector2 position)
     {
-        gridCells[GetGridCellFromPosition(position)].Add(entityID);
+        (int, int) cell = GetGridCellFromPosition(position);
+        gridCells[cell].Add(entityID);
+        return cell;
     }
 
     // public List<int> GetEntitiesInGridCell((int, int) gridCell)
