@@ -207,9 +207,14 @@ public partial class World : RefCounted
 		};
 	}
 
-	public Vector2 GetPositionOfGridCell((int, int) gridPosition)
+	public Vector2 GetRandomPositionInGridCell((int, int) gridPosition)
 	{
 		return worldGrid.GetRandomPositionInGridCell(gridPosition);
+	}
+
+	public (int, int) GetGridCellFromPosition(Vector2 position)
+	{
+		return worldGrid.GetGridCellFromPosition(position);
 	}
 }
 
