@@ -30,7 +30,7 @@ public partial class World : RefCounted
 		{
 			if (componentFilter == (componentFilter &= keyType))
 			{
-				entities = (HashSet<int>)entities.Concat(ComponentEntityRegister[keyType]);
+				entities.UnionWith(ComponentEntityRegister[keyType]);
 			}
 		}
 		return [.. entities];
@@ -43,6 +43,7 @@ public partial class World : RefCounted
 
 	void AddEntity(Dictionary<ComponentType, Component> entityArchetype)
 	{
+		//GD.Print("Adding Entity");
 		// copy components
 		Dictionary<ComponentType, Component> newComponents = new(entityArchetype);
 
@@ -55,7 +56,15 @@ public partial class World : RefCounted
 		{
 			key |= type;
 		}
-		ComponentEntityRegister[key].Add(nextID);
+
+		if (ComponentEntityRegister.TryGetValue(key, out List<int> value))
+		{
+            value.Add(nextID);
+		}
+		else
+		{
+			ComponentEntityRegister[key] = new(nextID);
+		}
 
 		nextID++;
 	}
@@ -151,6 +160,7 @@ public partial class World : RefCounted
 	/// </summary>
 	public void RunWorldFrame() 
 	{
+		//GD.Print("Running World Frame");
 		goalSystem.Run();
 		movementSystem.Run();
 		gridSystem.Run();
@@ -195,6 +205,11 @@ public partial class World : RefCounted
 			liveShipRotations = aliveRotations,
 			deadShipPositions = deadTransforms
 		};
+	}
+
+	public Vector2 GetPositionOfGridCell((int, int) gridPosition)
+	{
+		return worldGrid.GetRandomPositionInGridCell(gridPosition);
 	}
 }
 

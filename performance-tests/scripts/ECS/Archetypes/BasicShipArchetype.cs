@@ -11,7 +11,11 @@ public struct BasicShipArchetype() : IArchetype
         {ComponentType.GridPosition, new GridPositionComponent()},
         {ComponentType.Rotation, new RotationComponent()},
         {ComponentType.Size, new SizeComponent()},
-        {ComponentType.Health, new HealthComponent()},
+        {ComponentType.Health, new HealthComponent()
+        {
+            Health = 100
+        }
+        },
         {ComponentType.Damage, new DamageComponent()},
         {ComponentType.Team, new TeamComponent()},
         {ComponentType.Behaviour, new BehaviourComponent()},

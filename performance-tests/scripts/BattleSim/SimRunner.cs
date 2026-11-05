@@ -21,6 +21,7 @@ public partial class SimRunner : Node2D
 	public override void _Ready()
 	{
 		world = new();
+		world.Start();
 	}
 
 	public void StartSim(/*variables*/)
@@ -30,7 +31,7 @@ public partial class SimRunner : Node2D
 		// fake it till you make it
 		Dictionary<int, IArchetype> worldPopulation = new()
 		{
-			{100, new BasicShipArchetype()}
+			{10000, new BasicShipArchetype()}
 		};
 
 		// populate the world with variables
@@ -46,18 +47,18 @@ public partial class SimRunner : Node2D
 	{
 		if (running)
 		{
-			if (simRunTask.Status == TaskStatus.RanToCompletion) // need to implement checks for failed, cancelled, etc.
+			if (simRunTask.Status == TaskStatus.RanToCompletion || simRunTask.Status == TaskStatus.Canceled || simRunTask.Status == TaskStatus.Faulted)
 			{
 				renderingData = world.GetRenderingData();
 
 				simRunTask = Task.Run(world.RunWorldFrame);
 			}
+
+			// rendering using data
+			// basics are position and rotation
+			// eventually, shooting and stuff
+
+			renderer.Render(renderingData);
 		}
-
-		// rendering using data
-		// basics are position and rotation
-		// eventually, shooting and stuff
-
-		renderer.Render(renderingData);
 	}
 }

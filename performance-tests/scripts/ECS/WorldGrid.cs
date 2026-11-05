@@ -104,7 +104,7 @@ public partial class WorldGrid(int cellSize, int gridHeight, int gridWidth) : Re
                     continue;
                 }
 
-                entities = (HashSet<int>)entities.Concat(gridCells[(x, y)]);
+                entities.UnionWith(gridCells[(x, y)]);
             }
         }
         return [.. entities];
