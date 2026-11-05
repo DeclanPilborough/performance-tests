@@ -12,7 +12,7 @@ namespace ECS;
 /// </summary>
 public partial class GridSystem : System
 {
-    public override ComponentType ComponentFilter => ComponentType.Position | ComponentType.GridPosition | ComponentType.Rotation | ComponentType.Size;
+    public override ComponentType ComponentFilter => ComponentType.Position | ComponentType.GridPosition | ComponentType.Rotation | ComponentType.Size | ComponentType.Health;
 
     public override void Run(double delta)
     {
@@ -25,6 +25,13 @@ public partial class GridSystem : System
         foreach (int entity in entities)
         {
             Dictionary<ComponentType, Component> components = world.GetComponentsOfEntity(entity);
+
+            // don't compute if ships is dead (and no longer moves)
+            if ((components[ComponentType.Health] as HealthComponent).Health <= 0)
+            {
+                continue;
+            }
+
             PositionComponent position = components[ComponentType.Position] as PositionComponent;
             GridPositionComponent gridPosition = components[ComponentType.GridPosition] as GridPositionComponent;
 
