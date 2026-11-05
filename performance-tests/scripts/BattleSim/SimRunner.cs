@@ -39,7 +39,7 @@ public partial class SimRunner : Node2D
 
 		renderingData = world.GetRenderingData();
 
-		simRunTask = Task.Run(world.RunWorldFrame);
+		simRunTask = Task.Run(() => world.RunWorldFrame(0));
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -51,7 +51,7 @@ public partial class SimRunner : Node2D
 			{
 				renderingData = world.GetRenderingData();
 
-				simRunTask = Task.Run(world.RunWorldFrame);
+				simRunTask = Task.Run(() => world.RunWorldFrame(delta));
 			}
 
 			// rendering using data

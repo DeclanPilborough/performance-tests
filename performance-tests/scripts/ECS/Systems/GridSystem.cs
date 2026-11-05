@@ -12,7 +12,7 @@ public partial class GridSystem : System
 {
     public override ComponentType ComponentFilter => throw new NotImplementedException();
 
-    public override void Run()
+    public override void Run(double delta)
     {
         throw new NotImplementedException();
     }

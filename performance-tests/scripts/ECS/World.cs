@@ -158,14 +158,14 @@ public partial class World : RefCounted
 	/// <summary>
 	/// Runs a frame of the simulation, including running all systems.
 	/// </summary>
-	public void RunWorldFrame() 
+	public void RunWorldFrame(double delta) 
 	{
 		//GD.Print("Running World Frame");
-		goalSystem.Run();
-		movementSystem.Run();
-		gridSystem.Run();
-		targetingSystem.Run();
-		damageSystem.Run();
+		goalSystem.Run(delta);
+		movementSystem.Run(delta);
+		gridSystem.Run(delta);
+		targetingSystem.Run(delta);
+		damageSystem.Run(delta);
 	}
 
 	// rendering data

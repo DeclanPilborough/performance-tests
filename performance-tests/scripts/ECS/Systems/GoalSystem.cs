@@ -13,7 +13,7 @@ public partial class GoalSystem : System
 {
     public override ComponentType ComponentFilter => ComponentType.Team | ComponentType.Position;
 
-    public override void Run()
+    public override void Run(double delta)
     {
         List<int> dataEntities = world.GetEntitiesByComponents(ComponentFilter);
 
