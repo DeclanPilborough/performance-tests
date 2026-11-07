@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://htg5krwf7exk"]
 
-[ext_resource type="Script" uid="uid://7sakx50fcfan" path="res://performance-tests/scripts/ship_spawner.gd" id="1_evdxv"]
+[ext_resource type="Script" uid="uid://7sakx50fcfan" path="res://performance-tests/scripts/Old/ship_spawner.gd" id="1_evdxv"]
 
 [node name="TeamShipSpawn" type="Node2D" unique_id=1971023653]
 script = ExtResource("1_evdxv")
