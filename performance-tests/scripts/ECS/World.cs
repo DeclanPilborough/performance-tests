@@ -69,7 +69,7 @@ public partial class World : RefCounted
 		nextID++;
 	}
 	
-	void AddComponentToEntity(int entityID, ComponentType newComponentType, Component newComponent)
+	public void AddComponentToEntity(int entityID, ComponentType newComponentType, Component newComponent)
 	{
 		// get the old ce register key before it is edited
 		ComponentType oldKey = 0;
@@ -86,7 +86,7 @@ public partial class World : RefCounted
 		ComponentEntityRegister[oldKey |= newComponentType].Add(entityID);
 	}
 
-	void RemoveComponentFromEntity(int entityID, ComponentType typeToRemove)
+	public void RemoveComponentFromEntity(int entityID, ComponentType typeToRemove)
 	{
 		// same as add component but backwards
 		ComponentType oldKey = 0;

@@ -18,6 +18,11 @@ public struct BasicShipArchetype() : IArchetype
         },
         {ComponentType.Damage, new DamageComponent()},
         {ComponentType.Team, new TeamComponent()},
+        {ComponentType.Targeting, new TargetingComponent()
+        {
+            TargetPingRechargeTime = 1f
+        }
+        },
         {ComponentType.Behaviour, new BehaviourComponent()
         {
             MovementSpeed = 10f,
