@@ -18,7 +18,12 @@ public struct BasicShipArchetype() : IArchetype
         },
         {ComponentType.Damage, new DamageComponent()},
         {ComponentType.Team, new TeamComponent()},
-        {ComponentType.Behaviour, new BehaviourComponent()},
+        {ComponentType.Behaviour, new BehaviourComponent()
+        {
+            MovementSpeed = 10f,
+            RotationSpeed = 1f
+        }
+        },
         {ComponentType.Goal, new GoalComponent()}
     };
 }

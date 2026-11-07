@@ -31,7 +31,7 @@ public partial class SimRunner : Node2D
 		// fake it till you make it
 		Dictionary<int, IArchetype> worldPopulation = new()
 		{
-			{10000, new BasicShipArchetype()}
+			{1, new BasicShipArchetype()}
 		};
 
 		// populate the world with variables
