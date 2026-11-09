@@ -14,10 +14,23 @@ public partial class DamageSystem : System
     public override void Run(double delta)
     {
         List<int> entities = world.GetEntitiesByComponents(ComponentFilter);
-
+        if (entities.Count == 0) { return; }
+        GD.Print($"DamageSystem running with {entities.Count} entities");
         foreach (int entity in entities)
         {
             Dictionary<ComponentType, Component> components = world.GetComponentsOfEntity(entity);
+
+            // if dead, remove extra comopnents and dont do anything else
+            if ((components[ComponentType.Health] as HealthComponent).Health <= 0)
+            {
+                world.RemoveComponentFromEntity(entity, ComponentType.Behaviour); // so movement doesn't happen
+                world.RemoveComponentFromEntity(entity, ComponentType.Damage); // so no damage happens
+                world.RemoveComponentFromEntity(entity, ComponentType.Target); // so no damage (again)
+                world.RemoveComponentFromEntity(entity, ComponentType.Targeting); // so no targeting occurs
+                world.RemoveComponentFromEntity(entity, ComponentType.Size); // to prevent grid calculations
+                continue;
+            }
+
             TargetComponent target = components[ComponentType.Target] as TargetComponent;
             DamageComponent damage = components[ComponentType.Damage] as DamageComponent;
 

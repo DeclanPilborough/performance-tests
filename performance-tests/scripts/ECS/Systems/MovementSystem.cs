@@ -16,6 +16,8 @@ public partial class MovementSystem : System
     public override void Run(double delta)
     {
         List<int> entities = world.GetEntitiesByComponents(ComponentFilter);
+        if (entities.Count == 0) { return; }
+        GD.Print($"MovementSystem running with {entities.Count} entities");
 
         // for now, all ships behave the same-ish way
         foreach (int entity in entities)
@@ -40,12 +42,10 @@ public partial class MovementSystem : System
             BehaviourComponent behaviour = components[ComponentType.Behaviour] as BehaviourComponent;
 
             // calculate angle to turn towards
-            // this doesn't work right now. when a ship moves past the moveToward point, it is unable to turn around as moving one direction reverses the sign of the angle, 
-            // causing the ship to turn the other way. this loops, making the ship do a kind of silly wiggle away from the point
             float angle = Mathf.Atan2(moveToward.Y - position.Position.Y, moveToward.X - position.Position.X);
 
             // turn towards angle with speed
-            rotation.Rotation = float.Lerp(rotation.Rotation, angle, behaviour.RotationSpeed * (float)delta);
+            rotation.Rotation = Mathf.LerpAngle(rotation.Rotation, angle, behaviour.RotationSpeed * (float)delta);
 
             // get forward vector
             Vector2 forward = new(Mathf.Cos(rotation.Rotation), Mathf.Sin(rotation.Rotation));
@@ -55,9 +55,11 @@ public partial class MovementSystem : System
 
             position.Position += forward;
 
-            GD.Print($"Diagnostics:\nMoving Toward {moveToward} from {position.Position}\n" +
-            $"Rotation From {rotation.Rotation} to {angle} by amount {behaviour.RotationSpeed * (float)delta}\n" +
-            $"Moving forward with vector {forward} by amount {behaviour.MovementSpeed * (float)delta}");
+            position.Position = position.Position.Clamp(Vector2.Zero, new(5000, 5000)); // clamp movement to dummy grid values (to prevent errors)
+
+            // GD.Print($"Diagnostics:\nMoving Toward {moveToward} from {position.Position}\n" +
+            // $"Rotation From {rotation.Rotation} to {angle} by amount {behaviour.RotationSpeed * (float)delta}\n" +
+            // $"Moving forward with vector {forward} by amount {behaviour.MovementSpeed * (float)delta}");
         }
     }
 

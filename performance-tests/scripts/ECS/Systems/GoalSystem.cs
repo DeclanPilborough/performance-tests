@@ -16,6 +16,8 @@ public partial class GoalSystem : System
     public override void Run(double delta)
     {
         List<int> dataEntities = world.GetEntitiesByComponents(ComponentFilter);
+        if (dataEntities.Count == 0) { return; }
+        GD.Print($"GoalSystem running with {dataEntities.Count} entities");
 
         // calculates average centre of all ships for each team
 

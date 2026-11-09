@@ -28,7 +28,7 @@ public partial class World : RefCounted
 		HashSet<int> entities = [];
 		foreach (ComponentType keyType in ComponentEntityRegister.Keys)
 		{
-			if (componentFilter == (componentFilter &= keyType))
+			if (componentFilter == (componentFilter & keyType))
 			{
 				entities.UnionWith(ComponentEntityRegister[keyType]);
 			}
@@ -63,7 +63,7 @@ public partial class World : RefCounted
 		}
 		else
 		{
-			ComponentEntityRegister[key] = new(nextID);
+			ComponentEntityRegister[key] = [nextID];
 		}
 
 		nextID++;
@@ -83,7 +83,16 @@ public partial class World : RefCounted
 
 		// then remove from old ce register entry and enter into new one
 		ComponentEntityRegister[oldKey].Remove(entityID);
-		ComponentEntityRegister[oldKey |= newComponentType].Add(entityID);
+		//ComponentEntityRegister[oldKey |= newComponentType].Add(entityID);
+
+		if (ComponentEntityRegister.TryGetValue(oldKey | newComponentType, out List<int> value))
+		{
+            value.Add(entityID);
+		}
+		else
+		{
+			ComponentEntityRegister[oldKey | newComponentType] = [entityID];
+		}
 	}
 
 	public void RemoveComponentFromEntity(int entityID, ComponentType typeToRemove)
@@ -98,7 +107,16 @@ public partial class World : RefCounted
 		EntityComponentRegister[entityID].Remove(typeToRemove);
 
 		ComponentEntityRegister[oldKey].Remove(entityID);
-		ComponentEntityRegister[oldKey &= ~typeToRemove].Add(entityID);
+		//ComponentEntityRegister[oldKey &= ~typeToRemove].Add(entityID);
+
+		if (ComponentEntityRegister.TryGetValue(oldKey & ~typeToRemove, out List<int> value))
+		{
+            value.Add(entityID);
+		}
+		else
+		{
+			ComponentEntityRegister[oldKey & ~typeToRemove] = [entityID];
+		}
 	}
 
 	// world
@@ -142,16 +160,13 @@ public partial class World : RefCounted
 	/// <summary>
 	/// Populates the world with the provided entities.
 	/// </summary>
-	public void PopulateWorld(/*archetypes/data for population*/ Dictionary<int, IArchetype> population)
+	public void PopulateWorld(/*archetypes/data for population*/ List<Dictionary<ComponentType, Component>> entities)
 	{
 		worldGrid.BuildGrid();
 		
-		foreach (KeyValuePair<int, IArchetype> kvp in population)
+		for (int i = 0; i < entities.Count; i++)
 		{
-			for (int i = 0; i < kvp.Key; i++)
-			{
-				AddEntity(kvp.Value.GetArchetypeComponents());
-			}
+			AddEntity(entities[i]);
 		}
 	}
 	
@@ -161,11 +176,23 @@ public partial class World : RefCounted
 	public void RunWorldFrame(double delta) 
 	{
 		//GD.Print("Running World Frame");
-		goalSystem.Run(delta);
-		movementSystem.Run(delta);
-		gridSystem.Run(delta);
-		targetingSystem.Run(delta);
-		damageSystem.Run(delta);
+
+		try 
+		{
+			goalSystem.Run(delta);
+			movementSystem.Run(delta);
+			gridSystem.Run(delta);
+			targetingSystem.Run(delta);
+			damageSystem.Run(delta);
+		}
+		catch (Exception ex)
+		{
+			GD.Print(ex.Message + ex.StackTrace);
+		}
+		// foreach (int entity in EntityComponentRegister.Keys)
+		// {
+		// 	GD.Print($"Entity {entity} has {GetComponentsOfEntity(entity).Count} and {(GetComponentsOfEntity(entity)[ComponentType.Health] as HealthComponent).Health} health");
+		// }
 	}
 
 	// rendering data

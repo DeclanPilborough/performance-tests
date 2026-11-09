@@ -14,7 +14,7 @@ enum direction { left, right }
 var type1list: Array
 
 # preload new ships types
-var type1: PackedScene = preload("res://performance-tests/scenes/new_base_test_ship.tscn")
+var type1: PackedScene = preload("res://performance-tests/scenes/Old/new_base_test_ship.tscn")
 
 func spawn_ships() -> void:
 	var t1new = $Type1Input.value - type1list.size()

@@ -18,13 +18,13 @@ public struct BasicShipArchetype() : IArchetype
         },
         {ComponentType.Health, new HealthComponent()
         {
-            Health = 100
+            Health = 1000
         }
         },
         {ComponentType.Damage, new DamageComponent()
         {
             DamagePerShot = 10,
-            ShotRechargeTime = 1.5f
+            ShotRechargeTime = 0.1f
         }
         },
         {ComponentType.Team, new TeamComponent()},
@@ -35,15 +35,10 @@ public struct BasicShipArchetype() : IArchetype
         },
         {ComponentType.Behaviour, new BehaviourComponent()
         {
-            MovementSpeed = 10,
+            MovementSpeed = 50,
             RotationSpeed = 1
         }
         },
         {ComponentType.Goal, new GoalComponent()}
     };
-
-    public Dictionary<ComponentType, Component> GetArchetypeComponents()
-    {
-        return new Dictionary<ComponentType, Component>(ArchetypeComponents);
-    }
 }

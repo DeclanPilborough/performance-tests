@@ -14,6 +14,8 @@ public partial class TargetingSystem : System
     public override void Run(double delta)
     {
         List<int> entities = world.GetEntitiesByComponents(ComponentFilter);
+        if (entities.Count == 0) { return; }
+        GD.Print($"TargetingSystem running with {entities.Count} entities");
 
         foreach (int entity in entities)
         {
@@ -29,8 +31,8 @@ public partial class TargetingSystem : System
 
                 TeamComponent team = components[ComponentType.Team] as TeamComponent;
 
-                    int target = -1; // -1 for no target, yet
-                    float targetDistance = 1000f; // should start at max range, if that will ever exist
+                int target = -1; // -1 for no target, yet
+                float targetDistance = 1000f; // should start at max range, if that will ever exist
                 
                 // remove allies from consideration, and find the closest enemy
                 foreach (int potentialTarget in potentialTargets)

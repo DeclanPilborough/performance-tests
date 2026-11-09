@@ -28,11 +28,40 @@ public partial class SimRunner : Node2D
 	{
 		running = true;
 
-		// fake it till you make it
-		Dictionary<int, IArchetype> worldPopulation = new()
+		// fake it till you make it	
+		int shipCount = 50000;
+
+		int rowCount = 450;
+		int spacing = 10;
+
+		List<Dictionary<ComponentType, Component>> worldPopulation = new(0);
+		
+		for (int i = 0; i < shipCount; i++)
 		{
-			{1, new BasicShipArchetype()}
-		};
+			int rows = i / rowCount;
+			int col = rows * spacing;
+			float xPos = 10 + col;
+			float yPos = 10 + ((i % rowCount) + 1) * spacing;
+			
+			int team = i >= shipCount/2 ? 1 : 0;
+
+			if (team == 1)
+			{
+				xPos += 1000;
+			}
+
+			worldPopulation.Add(new Dictionary<ComponentType, Component>(BasicShipArchetype.ArchetypeComponents)
+			{
+				[ComponentType.Position] = new PositionComponent()
+				{
+					Position = new(xPos, yPos)
+				},
+				[ComponentType.Team] = new TeamComponent()
+				{
+					Team = team
+				}
+			});
+		}
 
 		// populate the world with variables
 		world.PopulateWorld(worldPopulation);

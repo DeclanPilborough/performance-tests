@@ -17,6 +17,9 @@ public partial class GridSystem : System
     public override void Run(double delta)
     {
         List<int> entities = world.GetEntitiesByComponents(ComponentFilter);
+        if (entities.Count == 0) { return; }
+
+        GD.Print($"GridSystem running with {entities.Count} entities");
 
         // clear the grid for rebuilding
         world.worldGrid.ClearEntitiesFromGrid();

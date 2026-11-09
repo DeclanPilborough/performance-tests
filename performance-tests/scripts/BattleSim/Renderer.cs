@@ -19,7 +19,7 @@ public partial class Renderer : Node2D
             Multimesh = aliveShipsMultiMesh
         });
 
-        aliveShipsMultiMesh.InstanceCount = 10000;
+        aliveShipsMultiMesh.InstanceCount = 50000;
 
         aliveShipsMultiMesh.Mesh = new QuadMesh()
         {
@@ -32,6 +32,12 @@ public partial class Renderer : Node2D
         foreach (KeyValuePair<int, Vector2> kvp in data.liveShipPositions)
         {
             Transform2D transform = new(data.liveShipRotations[kvp.Key], Vector2.One,  0f, kvp.Value);
+            aliveShipsMultiMesh.SetInstanceTransform2D(kvp.Key, transform);
+        }
+
+        foreach (KeyValuePair<int, Vector2> kvp in data.deadShipPositions)
+        {
+            Transform2D transform = new(0f, Vector2.Zero, 0f, kvp.Value);
             aliveShipsMultiMesh.SetInstanceTransform2D(kvp.Key, transform);
         }
     }
