@@ -5,5 +5,7 @@ using System.Collections.Generic;
 namespace ECS;
 public interface IArchetype
 {
-    public Dictionary<ComponentType, Component> ArchetypeComponents { get; }
+    public static Dictionary<ComponentType, Component> ArchetypeComponents { get; }
+
+    public Dictionary<ComponentType, Component> GetArchetypeComponents();
 }

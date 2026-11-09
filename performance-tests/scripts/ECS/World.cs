@@ -150,7 +150,7 @@ public partial class World : RefCounted
 		{
 			for (int i = 0; i < kvp.Key; i++)
 			{
-				AddEntity(kvp.Value.ArchetypeComponents);
+				AddEntity(kvp.Value.GetArchetypeComponents());
 			}
 		}
 	}

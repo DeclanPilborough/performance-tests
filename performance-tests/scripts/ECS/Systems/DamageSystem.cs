@@ -28,7 +28,8 @@ public partial class DamageSystem : System
                 world.RemoveComponentFromEntity(entity, ComponentType.Target);
                 world.AddComponentToEntity(entity, ComponentType.Targeting, new TargetingComponent()
                 {
-                    // somehow figure out the defaut values of this ship. hrm
+                    // obsv this only works with the one ship type
+                    TargetPingRechargeTime = (BasicShipArchetype.ArchetypeComponents[ComponentType.Targeting] as TargetingComponent).TargetPingRechargeTime 
                 });
                 continue;
             }
