@@ -19,12 +19,15 @@ public partial class Renderer : Node2D
             Multimesh = aliveShipsMultiMesh
         });
 
-        aliveShipsMultiMesh.InstanceCount = 50000;
-
         aliveShipsMultiMesh.Mesh = new QuadMesh()
         {
             Size = new(16f, 16f)
         };
+    }
+
+    public void SetInstanceCount(int instanceCount)
+    {
+        aliveShipsMultiMesh.InstanceCount = instanceCount;
     }
 
     public void Render(RenderingData data)

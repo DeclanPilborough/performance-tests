@@ -24,15 +24,17 @@ public partial class SimRunner : Node2D
 		world.Start();
 	}
 
-	public void StartSim(/*variables*/)
+	public void StartSim(int numberOfShips)
 	{
 		running = true;
 
-		// fake it till you make it	
-		int shipCount = 50000;
+		renderer.SetInstanceCount(numberOfShips);
 
-		int rowCount = 450;
-		int spacing = 10;
+		// fake it till you make it	
+		int shipCount = numberOfShips;
+
+		int rowCount = 245;
+		int spacing = 20;
 
 		List<Dictionary<ComponentType, Component>> worldPopulation = new(0);
 		
